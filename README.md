@@ -34,6 +34,10 @@ go get -u github.com/ghosind/utils
 
   Gets the pointer of a value.
 
+- `func Value[T any](v *T) T`
+
+  Gets the value of a pointer, or the zero value of the type if the pointer is nil.
+
 - `ValueWithDefault[T any](v *T, defaultValue T) T`
 
   Gets the value of a pointer, or the default value if the pointer is nil.

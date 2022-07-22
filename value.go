@@ -5,6 +5,16 @@ func Pointer[T any](v T) *T {
 	return &v
 }
 
+// Value returns the value of a pointer, or the zero value of the type if the pointer is nil.
+func Value[T any](v *T) T {
+	if v != nil {
+		return *v
+	}
+
+	var zero T
+	return zero
+}
+
 // ValueWithDefault returns the value passed in if it is not nil, otherwise returns the default value.
 func ValueWithDefault[T any](val *T, defaultVal T) T {
 	if val == nil {
