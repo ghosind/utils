@@ -2,6 +2,8 @@
 
 A set of utilities functions for Golang.
 
+> PLEASE NOTE: This package is working with Go 1.18 and later versions.
+
 ## Installation
 
 You can install this package with [`go get`](https://golang.org/cmd/go) command:
@@ -9,8 +11,6 @@ You can install this package with [`go get`](https://golang.org/cmd/go) command:
 ```sh
 go get -u github.com/ghosind/utils
 ```
-
-> PLEASE NOTE: This package is working with Go 1.18 and later versions.
 
 ## APIs
 
@@ -27,6 +27,20 @@ go get -u github.com/ghosind/utils
 - `Min[T constraints.Ordered](a, b T) T`
 
   Gets the minimum value of two values.
+
+### Type
+
+- `IsSameType(v1, v2 any) bool`
+
+  Compares two values' type.
+
+- `IsSameRawType(v1, v2 any) bool`
+
+  Compares two values' type without pointer.
+
+- `RawTypeOf(v any) string`
+
+  Gets the type string name without pointer.
 
 ### Pointer and Value
 
