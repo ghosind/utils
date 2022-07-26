@@ -57,4 +57,9 @@ func TestGetElem(t *testing.T) {
 	if reflect.TypeOf(GetElem(t2)).Kind() == reflect.Ptr {
 		t.Error("GetElem(t2) returns a pointer, expect not pointer")
 	}
+
+	t2 = nil
+	if GetElem(t2) != nil {
+		t.Errorf("GetElem(t2) returns %d, expect nil", *t2)
+	}
 }

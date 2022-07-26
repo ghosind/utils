@@ -33,6 +33,9 @@ func GetElem(o any) any {
 	}
 
 	v := reflect.ValueOf(o)
+	if v.IsNil() {
+		return nil
+	}
 	for v.Kind() == reflect.Ptr {
 		v = v.Elem()
 	}
