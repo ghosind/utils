@@ -42,6 +42,10 @@ go get -u github.com/ghosind/utils
 
   Gets the type string name without pointer.
 
+- `GetElem(o any) any`
+
+  Gets element without pointer.
+
 ### Pointer and Value
 
 - `Pointer[T any](v T) *T`

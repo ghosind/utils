@@ -1,6 +1,9 @@
 package utils
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 type testStruct1 struct {
 	a int
@@ -44,5 +47,14 @@ func TestIsSameRawType(t *testing.T) {
 	var t4 *testStruct1
 	if !IsSameRawType(t1, t4) {
 		t.Error("IsSameRawType returns false, expect true")
+	}
+}
+
+func TestGetElem(t *testing.T) {
+	t1 := testStruct1{}
+	t2 := &t1
+
+	if reflect.TypeOf(GetElem(t2)).Kind() == reflect.Ptr {
+		t.Error("GetElem(t2) returns a pointer, expect not pointer")
 	}
 }

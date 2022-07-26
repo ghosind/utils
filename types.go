@@ -25,3 +25,17 @@ func RawTypeOf(v any) string {
 
 	return ty.String()
 }
+
+// GetElem returns the element without pointer.
+func GetElem(o any) any {
+	if o == nil {
+		return nil
+	}
+
+	v := reflect.ValueOf(o)
+	for v.Kind() == reflect.Ptr {
+		v = v.Elem()
+	}
+
+	return v.Interface()
+}
