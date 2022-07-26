@@ -59,7 +59,11 @@ func TestGetElem(t *testing.T) {
 	}
 
 	t2 = nil
-	if GetElem(t2) != nil {
-		t.Errorf("GetElem(t2) returns %d, expect nil", *t2)
+	if v := GetElem(t2); v != nil {
+		t.Errorf("GetElem(t2) returns %v, expect nil", v)
+	}
+
+	if v := GetElem(nil); v != nil {
+		t.Errorf("GetElem(nil) returns %v, expect nil", v)
 	}
 }
