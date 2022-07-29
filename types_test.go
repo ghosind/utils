@@ -50,6 +50,26 @@ func TestIsSameRawType(t *testing.T) {
 	}
 }
 
+func TestRawTypeOf(t *testing.T) {
+	vType := "int"
+	v1 := 0 // int value
+	if ty := RawTypeOf(v1); ty != vType {
+		t.Errorf("RawTypeOf(v1) returns %s, expect %s", ty, vType)
+	}
+	v2 := &v1 // pointer
+	if ty := RawTypeOf(v2); ty != vType {
+		t.Errorf("RawTypeOf(v2) returns %s, expect %s", ty, vType)
+	}
+	v3 := &v2 // pointer to pointer
+	if ty := RawTypeOf(v3); ty != vType {
+		t.Errorf("RawTypeOf(v3) returns %s, expect %s", ty, vType)
+	}
+
+	if ty := RawTypeOf(nil); ty != "<nil>" {
+		t.Errorf("RawTypeOf(v1) returns %s, expect <nil>", ty)
+	}
+}
+
 func TestGetElem(t *testing.T) {
 	t1 := testStruct1{}
 	t2 := &t1

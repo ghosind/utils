@@ -1,6 +1,8 @@
 package utils
 
-import "reflect"
+import (
+	"reflect"
+)
 
 // IsSameType compares two values' type.
 func IsSameType(v1, v2 any) bool {
@@ -18,6 +20,10 @@ func IsSameRawType(v1, v2 any) bool {
 // RawTypeOf returns the type string name without pointer.
 func RawTypeOf(v any) string {
 	ty := reflect.TypeOf(v)
+
+	if ty == nil {
+		return "<nil>"
+	}
 
 	for ty.Kind() == reflect.Ptr {
 		ty = ty.Elem()
