@@ -30,8 +30,8 @@ func TestIsSameType(t *testing.T) {
 		t.Error("IsSameType(t1, t4) returns false, expect true")
 	}
 
-	if !IsSameType(t1, nil) {
-		t.Error("IsSameType(t1, nil) returns false, expect true")
+	if IsSameType(t1, nil) {
+		t.Error("IsSameType(t1, nil) returns true, expect false")
 	}
 }
 
@@ -55,8 +55,8 @@ func TestIsSameRawType(t *testing.T) {
 }
 
 func TestTypeOf(t *testing.T) {
-	if ty := TypeOf(nil); ty != "int" {
-		t.Errorf("TypeOf(nil) returns %s, expect int", ty)
+	if ty := TypeOf(nil); ty != "<nil>" {
+		t.Errorf("TypeOf(nil) returns %s, expect <nil>", ty)
 	}
 
 	v1 := 0
