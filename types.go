@@ -6,8 +6,8 @@ import (
 
 // IsSameType compares two values' type.
 func IsSameType(v1, v2 any) bool {
-	ty1 := reflect.TypeOf(v1).String()
-	ty2 := reflect.TypeOf(v2).String()
+	ty1 := TypeOf(v1)
+	ty2 := TypeOf(v2)
 
 	return ty1 == ty2
 }

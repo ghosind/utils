@@ -17,17 +17,21 @@ func TestIsSameType(t *testing.T) {
 	t1 := new(testStruct1)
 	t2 := testStruct1{}
 	if IsSameType(t1, t2) {
-		t.Error("IsSameType returns true, expect false")
+		t.Error("IsSameType(t1, t2) returns true, expect false")
 	}
 
 	t3 := new(testStruct2[int])
 	if IsSameType(t1, t3) {
-		t.Error("IsSameType returns true, expect false")
+		t.Error("IsSameType(t1, t3) returns true, expect false")
 	}
 
 	var t4 *testStruct1
 	if !IsSameType(t1, t4) {
-		t.Error("IsSameType returns false, expect true")
+		t.Error("IsSameType(t1, t4) returns false, expect true")
+	}
+
+	if !IsSameType(t1, nil) {
+		t.Error("IsSameType(t1, nil) returns false, expect true")
 	}
 }
 
