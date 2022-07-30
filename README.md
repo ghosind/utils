@@ -1,6 +1,10 @@
 # Utilities for Golang
 
-[![codecov](https://codecov.io/gh/ghosind/utils/branch/master/graph/badge.svg)](https://codecov.io/gh/ghosind/utils)
+![Test](https://github.com/ghosind/utils/workflows/utils/badge.svg)
+[![codecov](https://codecov.io/gh/ghosind/utils/branch/main/graph/badge.svg)](https://codecov.io/gh/ghosind/utils)
+[![Latest version](https://img.shields.io/github/v/release/ghosind/utils?include_prereleases)](https://github.com/ghosind/utils)
+![License Badge](https://img.shields.io/github/license/ghosind/utils)
+[![Go Reference](https://pkg.go.dev/badge/github.com/ghosind/utils.svg)](https://pkg.go.dev/github.com/ghosind/utils)
 
 A set of utilities functions for Golang.
 
@@ -81,3 +85,7 @@ go get -u github.com/ghosind/utils
 - `ValueMap[K comparable, V any](v map[K]*V) map[K]V`
 
   Converts a pointer map to a map.
+
+## License
+
+Distributed under the MIT License. See LICENSE file for more information.
