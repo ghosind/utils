@@ -11,6 +11,35 @@ func TestConditional(t *testing.T) {
 	}
 }
 
+func TestConditionalExpr(t *testing.T) {
+	var str *string
+
+	if ret := ConditionalExpr(
+		str != nil,
+		func() string {
+			return *str
+		},
+		func() string {
+			return ""
+		},
+	); ret != "" {
+		t.Errorf("ConditionalExpr returns %s, expect \"\"", ret)
+	}
+
+	str = Pointer("Hello world")
+	if ret := ConditionalExpr(
+		str != nil,
+		func() string {
+			return *str
+		},
+		func() string {
+			return ""
+		},
+	); ret != *str {
+		t.Errorf("ConditionalExpr returns %s, expect %s", ret, *str)
+	}
+}
+
 func TestMax(t *testing.T) {
 	a := 1
 	b := 2

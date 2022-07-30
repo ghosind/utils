@@ -26,6 +26,10 @@ go get -u github.com/ghosind/utils
 
   An alternative of ternary operator, same of `cond ? trueExpr : falseExpr`.
 
+- `ConditionalExpr[T any](cond bool, trueExpr, falseExpr func() T) T`
+
+  An alternative to the conditional (ternary) operator (?:), it'll run expression by the conditional result.
+
 - `Max[T constraints.Ordered](a, b T) T`
 
   Gets the maximum value of two values.

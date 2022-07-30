@@ -2,12 +2,22 @@ package utils
 
 import "golang.org/x/exp/constraints"
 
-// Conditional is an alternative to conditional (ternary) operator (?:).
+// Conditional is an alternative to the conditional (ternary) operator (?:).
 func Conditional[T any](cond bool, trueExpr, falseExpr T) T {
 	if cond {
 		return trueExpr
 	} else {
 		return falseExpr
+	}
+}
+
+// ConditionalExpr is an alternative to the conditional (ternary) operator (?:), it'll run
+// expression by the conditional result.
+func ConditionalExpr[T any](cond bool, trueExpr, falseExpr func() T) T {
+	if cond {
+		return trueExpr()
+	} else {
+		return falseExpr()
 	}
 }
 
