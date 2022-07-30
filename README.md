@@ -1,5 +1,7 @@
 # Utilities for Golang
 
+[![codecov](https://codecov.io/gh/ghosind/utils/branch/master/graph/badge.svg)](https://codecov.io/gh/ghosind/utils)
+
 A set of utilities functions for Golang.
 
 > PLEASE NOTE: This package is working with Go 1.18 and later versions.
