@@ -50,6 +50,22 @@ func TestIsSameRawType(t *testing.T) {
 	}
 }
 
+func TestTypeOf(t *testing.T) {
+	if ty := TypeOf(nil); ty != "int" {
+		t.Errorf("TypeOf(nil) returns %s, expect int", ty)
+	}
+
+	v1 := 0
+	if ty := TypeOf(v1); ty != "int" {
+		t.Errorf("TypeOf(v1) returns %s, expect int", ty)
+	}
+
+	v2 := &v1
+	if ty := TypeOf(v2); ty != "*int" {
+		t.Errorf("TypeOf(v2) returns %s, expect *int", ty)
+	}
+}
+
 func TestRawTypeOf(t *testing.T) {
 	vType := "int"
 	v1 := 0 // int value

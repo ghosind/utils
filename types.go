@@ -17,6 +17,16 @@ func IsSameRawType(v1, v2 any) bool {
 	return RawTypeOf(v1) == RawTypeOf(v2)
 }
 
+// TypeOf returns the type of the value represented in string.
+func TypeOf(v any) string {
+	t := reflect.TypeOf(v)
+	if t == nil {
+		return "<nil>"
+	}
+
+	return t.String()
+}
+
 // RawTypeOf returns the type string name without pointer.
 func RawTypeOf(v any) string {
 	ty := reflect.TypeOf(v)

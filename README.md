@@ -38,6 +38,10 @@ go get -u github.com/ghosind/utils
 
   Compares two values' type without pointer.
 
+- `TypeOf(v any) string`
+
+  Gets the type of the value represented in string.
+
 - `RawTypeOf(v any) string`
 
   Gets the type string name without pointer.
