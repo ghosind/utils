@@ -106,4 +106,14 @@ func TestGetElem(t *testing.T) {
 	if v := GetElem(nil); v != nil {
 		t.Errorf("GetElem(nil) returns %v, expect nil", v)
 	}
+
+	t3 := 1
+	if v := GetElem(t3); v != t3 {
+		t.Errorf("GetElem(t3) returns %v, expect %d", v, t3)
+	}
+
+	t4 := &t3
+	if v := GetElem(t4); v != t3 {
+		t.Errorf("GetElem(t4) returns %v, expect %d", v, t3)
+	}
 }

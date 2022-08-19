@@ -49,7 +49,7 @@ func GetElem(o any) any {
 	}
 
 	v := reflect.ValueOf(o)
-	if v.IsNil() {
+	if v.Kind() == reflect.Ptr && v.IsNil() {
 		return nil
 	}
 	for v.Kind() == reflect.Ptr {
