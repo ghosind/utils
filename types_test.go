@@ -3,117 +3,104 @@ package utils
 import (
 	"reflect"
 	"testing"
+
+	"github.com/ghosind/go-assert"
 )
 
 type testStruct1 struct {
-	a int
+	A int
 }
 
 type testStruct2[T any] struct {
-	a T
+	A T
 }
 
 func TestIsSameType(t *testing.T) {
+	a := assert.New(t)
+
 	t1 := new(testStruct1)
 	t2 := testStruct1{}
-	if IsSameType(t1, t2) {
-		t.Error("IsSameType(t1, t2) returns true, expect false")
-	}
+	a.NotTrueNow(IsSameType(t1, t2))
 
 	t3 := new(testStruct2[int])
-	if IsSameType(t1, t3) {
-		t.Error("IsSameType(t1, t3) returns true, expect false")
-	}
+	a.NotTrueNow(IsSameType(t1, t3))
 
 	var t4 *testStruct1
-	if !IsSameType(t1, t4) {
-		t.Error("IsSameType(t1, t4) returns false, expect true")
-	}
+	a.TrueNow(IsSameType(t1, t4))
 
-	if IsSameType(t1, nil) {
-		t.Error("IsSameType(t1, nil) returns true, expect false")
-	}
+	a.NotTrueNow(IsSameType(t1, nil))
 }
 
 func TestIsSameRawType(t *testing.T) {
+	a := assert.New(t)
+
 	t1 := new(testStruct1)
 	t2 := testStruct1{}
 
-	if !IsSameRawType(t1, t2) {
-		t.Error("IsSameFawType returns false, expect true")
-	}
+	a.TrueNow(IsSameRawType(t1, t2))
 
 	t3 := new(testStruct2[int])
-	if IsSameRawType(t1, t3) {
-		t.Error("IsSameRawType returns true, expect false")
-	}
+	a.NotTrueNow(IsSameRawType(t1, t3))
 
 	var t4 *testStruct1
-	if !IsSameRawType(t1, t4) {
-		t.Error("IsSameRawType returns false, expect true")
-	}
+	a.TrueNow(IsSameRawType(t1, t4))
 }
 
 func TestTypeOf(t *testing.T) {
-	if ty := TypeOf(nil); ty != "<nil>" {
-		t.Errorf("TypeOf(nil) returns %s, expect <nil>", ty)
-	}
+	a := assert.New(t)
+
+	ty := TypeOf(nil)
+	a.EqualNow(ty, "<nil>")
 
 	v1 := 0
-	if ty := TypeOf(v1); ty != "int" {
-		t.Errorf("TypeOf(v1) returns %s, expect int", ty)
-	}
+	ty = TypeOf(v1)
+	a.EqualNow(ty, "int")
 
 	v2 := &v1
-	if ty := TypeOf(v2); ty != "*int" {
-		t.Errorf("TypeOf(v2) returns %s, expect *int", ty)
-	}
+	ty = TypeOf(v2)
+	a.EqualNow(ty, "*int")
 }
 
 func TestRawTypeOf(t *testing.T) {
+	a := assert.New(t)
+
 	vType := "int"
 	v1 := 0 // int value
-	if ty := RawTypeOf(v1); ty != vType {
-		t.Errorf("RawTypeOf(v1) returns %s, expect %s", ty, vType)
-	}
-	v2 := &v1 // pointer
-	if ty := RawTypeOf(v2); ty != vType {
-		t.Errorf("RawTypeOf(v2) returns %s, expect %s", ty, vType)
-	}
-	v3 := &v2 // pointer to pointer
-	if ty := RawTypeOf(v3); ty != vType {
-		t.Errorf("RawTypeOf(v3) returns %s, expect %s", ty, vType)
-	}
+	ty := RawTypeOf(v1)
+	a.EqualNow(ty, vType)
 
-	if ty := RawTypeOf(nil); ty != "<nil>" {
-		t.Errorf("RawTypeOf(v1) returns %s, expect <nil>", ty)
-	}
+	v2 := &v1 // pointer
+	ty = RawTypeOf(v2)
+	a.EqualNow(ty, vType)
+
+	v3 := &v2 // pointer to pointer
+	ty = RawTypeOf(v3)
+	a.EqualNow(ty, vType)
+
+	ty = RawTypeOf(nil)
+	a.EqualNow(ty, "<nil>")
 }
 
 func TestGetElem(t *testing.T) {
+	a := assert.New(t)
+
 	t1 := testStruct1{}
 	t2 := &t1
 
-	if reflect.TypeOf(GetElem(t2)).Kind() == reflect.Ptr {
-		t.Error("GetElem(t2) returns a pointer, expect not pointer")
-	}
+	a.NotEqualNow(reflect.TypeOf(GetElem(t2)).Kind(), reflect.Ptr)
 
 	t2 = nil
-	if v := GetElem(t2); v != nil {
-		t.Errorf("GetElem(t2) returns %v, expect nil", v)
-	}
+	v := GetElem(t2)
+	a.NilNow(v)
 
-	if v := GetElem(nil); v != nil {
-		t.Errorf("GetElem(nil) returns %v, expect nil", v)
-	}
+	v = GetElem(nil)
+	a.NilNow(v)
 
 	t3 := 1
-	if v := GetElem(t3); v != t3 {
-		t.Errorf("GetElem(t3) returns %v, expect %d", v, t3)
-	}
+	v = GetElem(t3)
+	a.Equal(v, t3)
 
 	t4 := &t3
-	if v := GetElem(t4); v != t3 {
-		t.Errorf("GetElem(t4) returns %v, expect %d", v, t3)
-	}
+	v = GetElem(t4)
+	a.Equal(v, t3)
 }

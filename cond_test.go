@@ -1,20 +1,25 @@
 package utils
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/ghosind/go-assert"
+)
 
 func TestConditional(t *testing.T) {
+	a := assert.New(t)
 	language := "fr"
 
 	ret := Conditional(language == "en", "Hello", "Bonjour")
-	if ret == "Hello" {
-		t.Errorf("Conditional returns %s, expect \"Bonjour\"", ret)
-	}
+	a.EqualNow(ret, "Bonjour")
 }
 
 func TestConditionalExpr(t *testing.T) {
+	a := assert.New(t)
+
 	var str *string
 
-	if ret := ConditionalExpr(
+	ret := ConditionalExpr(
 		str != nil,
 		func() string {
 			return *str
@@ -22,12 +27,11 @@ func TestConditionalExpr(t *testing.T) {
 		func() string {
 			return ""
 		},
-	); ret != "" {
-		t.Errorf("ConditionalExpr returns %s, expect \"\"", ret)
-	}
+	)
+	a.Equal(ret, "")
 
 	str = Pointer("Hello world")
-	if ret := ConditionalExpr(
+	ret = ConditionalExpr(
 		str != nil,
 		func() string {
 			return *str
@@ -35,27 +39,25 @@ func TestConditionalExpr(t *testing.T) {
 		func() string {
 			return ""
 		},
-	); ret != *str {
-		t.Errorf("ConditionalExpr returns %s, expect %s", ret, *str)
-	}
+	)
+	a.Equal(ret, "Hello world")
 }
 
 func TestMax(t *testing.T) {
+	assertion := assert.New(t)
+
 	a := 1
 	b := 2
 
 	max := Max(a, b)
-	if max == a {
-		t.Errorf("Max returns %d, expect %d", max, b)
-	}
+	assertion.Equal(max, b)
 }
 
 func TestMin(t *testing.T) {
+	assertion := assert.New(t)
 	a := 1
 	b := 2
 
 	min := Min(a, b)
-	if min == b {
-		t.Errorf("Min returns %d, expect %d", min, a)
-	}
+	assertion.Equal(min, a)
 }

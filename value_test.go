@@ -3,65 +3,65 @@ package utils
 import (
 	"reflect"
 	"testing"
+
+	"github.com/ghosind/go-assert"
 )
 
 func TestPointer(t *testing.T) {
+	a := assert.New(t)
+
 	v := 1
 
 	vp := Pointer(v)
-	if reflect.TypeOf(vp).Kind() != reflect.Ptr {
-		t.Errorf("vp should be a pointer")
-	}
-	if v != *vp {
-		t.Errorf("*vp(%d) should equals to v(%d)", *vp, v)
-	}
+	a.EqualNow(reflect.TypeOf(vp).Kind(), reflect.Ptr)
+	a.NotNilNow(vp)
+	a.EqualNow(*vp, v)
 }
 
 func TestValue(t *testing.T) {
+	a := assert.New(t)
+
 	v := 1
 	vp := &v
 
 	pv := Value(vp)
-	if pv != v {
-		t.Errorf("pv(%d) should equals to v(%d)", pv, v)
-	}
+	a.EqualNow(pv, v)
 
 	vp = nil
 	pv = Value(vp)
-	if pv != 0 {
-		t.Errorf("pv should be 0, but %d", pv)
-	}
+	a.EqualNow(pv, 0)
 }
 
 func TestValueWithDefault(t *testing.T) {
+	a := assert.New(t)
+
 	defaultVal := 2
 	v := 1
 	vp := &v
 
 	pv := ValueWithDefault(vp, defaultVal)
-	if pv != v {
-		t.Errorf("pv(%d) should equals to v(%d)", pv, v)
-	}
+	a.EqualNow(pv, v)
 
 	vp = nil
 	pv = ValueWithDefault(vp, defaultVal)
-	if pv != defaultVal {
-		t.Errorf("pv should be %d, but %d", defaultVal, pv)
-	}
+	a.EqualNow(pv, defaultVal)
 }
 
 func TestPointerSlice(t *testing.T) {
+	a := assert.New(t)
+
 	arr := []int{0, 1, 2, 3, 4, 5, 6}
 
 	ret := PointerSlice(arr)
 	for i, p := range ret {
-		if arr[i] != *p {
-			t.Errorf("*ret[%d] is %d, expect %d", i, *p, arr[i])
-		}
+		a.NotNilNow(p)
+		a.EqualNow(*p, arr[i])
 	}
 }
 
 func TestValueSlice(t *testing.T) {
+	a := assert.New(t)
+
 	arr := []*int{
 		Pointer(1),
 		Pointer(2),
@@ -76,16 +76,16 @@ func TestValueSlice(t *testing.T) {
 	for i, e := range arr {
 		v := ret[i]
 		if e != nil {
-			if *e != v {
-				t.Errorf("ret[%d] is %d, expect %d", i, v, *e)
-			}
-		} else if v != zero {
-			t.Errorf("ret[%d] is %d, expect %d", i, v, zero)
+			a.EqualNow(*e, v)
+		} else {
+			a.EqualNow(v, zero)
 		}
 	}
 }
 
 func TestPointerMap(t *testing.T) {
+	a := assert.New(t)
+
 	greetings := map[string]string{
 		"en":    "Hello",
 		"fr":    "Bonjour",
@@ -93,20 +93,20 @@ func TestPointerMap(t *testing.T) {
 	}
 
 	ret := PointerMap(greetings)
+	a.EqualNow(len(ret), len(greetings))
 	for k, v := range greetings {
-		if *ret[k] != v {
-			t.Errorf("ret[%s] is %s, expect %s", k, *ret[k], v)
-		}
+		a.NotNilNow(ret[k])
+		a.EqualNow(*ret[k], v)
 	}
 	for k := range ret {
 		_, ok := greetings[k]
-		if !ok {
-			t.Errorf("Unexpected key %s in return value", k)
-		}
+		a.TrueNow(ok)
 	}
 }
 
 func TestValueMap(t *testing.T) {
+	a := assert.New(t)
+
 	greetings := map[string]*string{
 		"en":    Pointer("Hello"),
 		"fr":    nil,
@@ -117,17 +117,13 @@ func TestValueMap(t *testing.T) {
 	for k, v := range greetings {
 		if v == nil {
 			_, ok := ret[k]
-			if ok {
-				t.Errorf("Unexpected key %s in return value", k)
-			}
+			a.NotTrueNow(ok)
 		} else if *v != ret[k] {
-			t.Errorf("ret[%s] is %s, expect %s", k, ret[k], *v)
+			a.EqualNow(ret[k], *v)
 		}
 	}
 	for k := range ret {
 		_, ok := greetings[k]
-		if !ok {
-			t.Errorf("Unexpected key %s in return value", k)
-		}
+		a.TrueNow(ok)
 	}
 }
