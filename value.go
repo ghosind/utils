@@ -6,6 +6,11 @@ func Pointer[T any](v T) *T {
 }
 
 // Value returns the value of a pointer, or the zero value of the type if the pointer is nil.
+//
+//	var p1 *string // nil
+//	var p2 *string = Pointer("hello")
+//	Value(p1) // ""
+//	Value(p2) // "hello"
 func Value[T any](v *T) T {
 	if v != nil {
 		return *v
@@ -15,7 +20,13 @@ func Value[T any](v *T) T {
 	return zero
 }
 
-// ValueWithDefault returns the value passed in if it is not nil, otherwise returns the default value.
+// ValueWithDefault returns the value passed in if it is not nil, otherwise returns the default
+// value.
+//
+//	var p1 *string // nil
+//	var p2 *string = Pointer("hello")
+//	ValueWithDefault(p1, "default") // "default"
+//	ValueWithDefault(p2, "default") // "hello"
 func ValueWithDefault[T any](val *T, defaultVal T) T {
 	if val == nil {
 		return defaultVal
