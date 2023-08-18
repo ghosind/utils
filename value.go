@@ -1,6 +1,10 @@
 package utils
 
 // Pointer returns a pointer to the value passed in.
+//
+//	v := 1 // type is int
+//	vp := Pointer(v) // type is *int, *vp = 1
+//	TypeOf(vp) // "*int"
 func Pointer[T any](v T) *T {
 	return &v
 }
@@ -44,7 +48,12 @@ func PointerSlice[T any](src []T) []*T {
 	return dest
 }
 
-// ValueSlice converts a slice of pointers into a slice of values.
+// ValueSlice converts a slice of pointers into a slice of values, and it'll
+// set the value to the zero value of the type if the pointer is point to nil.
+//
+//	s1 := []*string{Pointer("Hello"), nil, Pointer("World")}
+//	s2 := ValueSlice(s1)
+//	// ["Hello", "", "World"]
 func ValueSlice[T any](src []*T) []T {
 	dest := make([]T, len(src))
 	for i := 0; i < len(src); i++ {
@@ -67,7 +76,12 @@ func PointerMap[K comparable, V any](src map[K]V) map[K]*V {
 	return dest
 }
 
-// ValueMap converts a map of pointers into a map of values.
+// ValueMap converts a map of pointers into a map of values, and it'll set the
+// value to the zero value of the type if the pointer is point to nil.
+//
+//	m1 := map[string]*int{ "a": Pointer(1), "b": nil, "c": Pointer(3) }
+//	m2 := ValueMap(m1)
+//	// [a:1, b:0, c:3]
 func ValueMap[K comparable, V any](src map[K]*V) map[K]V {
 	dest := make(map[K]V)
 	for k, val := range src {

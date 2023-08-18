@@ -5,6 +5,12 @@ import (
 )
 
 // IsSameType compares two values' type.
+//
+//	v1 := 1 // int
+//	v2 := 2 // int
+//	v3 := Pointer(3) // *int
+//	IsSameType(v1, v2) // true
+//	IsSameType(v1, v3) // false
 func IsSameType(v1, v2 any) bool {
 	ty1 := TypeOf(v1)
 	ty2 := TypeOf(v2)
@@ -13,11 +19,22 @@ func IsSameType(v1, v2 any) bool {
 }
 
 // IsSameRawType compares two values' type without pointer.
+//
+//	v1 := 1 // int
+//	v2 := 2 // int
+//	v3 := Pointer(3) // *int
+//	IsSameRawType(v1, v2) // true
+//	IsSameRawType(v1, v3) // true
 func IsSameRawType(v1, v2 any) bool {
 	return RawTypeOf(v1) == RawTypeOf(v2)
 }
 
 // TypeOf returns the type of the value represented in string.
+//
+//	TypeOf(nil) // "<nil>"
+//	TypeOf(1) // "int"
+//	TypeOf("test") // "string"
+//	TypeOf(&http.Client{}) // "*http.Client"
 func TypeOf(v any) string {
 	t := reflect.TypeOf(v)
 	if t == nil {
@@ -28,6 +45,11 @@ func TypeOf(v any) string {
 }
 
 // RawTypeOf returns the type string name without pointer.
+//
+//	RawTypeOf(nil) // "<nil>"
+//	RawTypeOf(1) // "int"
+//	RawTypeOf("test") // "string"
+//	RawTypeOf(&http.Client{}) // "http.Client"
 func RawTypeOf(v any) string {
 	ty := reflect.TypeOf(v)
 
@@ -43,6 +65,11 @@ func RawTypeOf(v any) string {
 }
 
 // GetElem returns the element without pointer.
+//
+//	v := 1
+//	vp := &v
+//	GetElem(v) // 1
+//	GetElem(vp) // 1
 func GetElem(o any) any {
 	if o == nil {
 		return nil

@@ -10,6 +10,17 @@ A set of utilities functions for Golang.
 
 > PLEASE NOTE: This package is working with Go 1.18 and later versions.
 
+- [Installation](#installation)
+- [Getting Started](#getting-started)
+  - [Handle Pointers](#handle-pointers)
+  - [Conditional Expression](#conditional-expression)
+- [Available Utilities](#available-utilities)
+  - [Conditional](#conditional)
+  - [Map Manipulation](#map-manipulation)
+  - [Type](#type)
+  - [Pointer and Value](#pointer-and-value)
+- [License](#license)
+
 ## Installation
 
 You can install this package with [`go get`](https://golang.org/cmd/go) command:
@@ -18,77 +29,92 @@ You can install this package with [`go get`](https://golang.org/cmd/go) command:
 go get -u github.com/ghosind/utils
 ```
 
-## APIs
+## Getting Started
+
+### Handle Pointers
+
+With the `Pointer` method, you can easy to get a pointer that points to any value you want.
+
+```go
+str := "Hello world" // string
+// get the pointer of the string, it equal to strp := &str
+strp := utils.Pointer(str) // string pointer, and it point to str
+log.Print(*strp) // Hello world
+
+// It's also working for literal values
+intp := utils.Pointer(1)
+// You can't do:
+// intp := &1
+log.Print(*intp) // 1
+```
+
+You can also use `Value` or `ValueWithDefault` to get the value of the pointer. For nil pointer, `Value` method will return the zero value of the type, and `ValueWithDefault` method will return the default value you set.
+
+```go
+utils.Value(strp) // Hello world
+utils.Value(str, "Default") // Hello world
+
+strp = nil
+utils.Value(strp) // "" (empty string)
+utils.Value(str, "Default") // Default
+```
+
+### Conditional Expression
+
+Golang does not provided ternary operator (`?:`), but you can use `utils.Conditional` or `utils.ConditionalExpr` to make it like a ternary expression.
+
+```go
+a := 1
+b := 2
+bigger := utils.Conditional(a > b, a, b) // a > b ? a : b
+// bigger: 2
+```
+
+## Available Utilities
 
 ### Conditional
 
-- `Conditional[T any](cond bool, trueExpr, falseExpr T) T`
+- [`Conditional`](https://pkg.go.dev/github.com/ghosind/utils#Conditional): An alternative of ternary operator, same of `cond ? trueExpr : falseExpr`.
 
-  An alternative of ternary operator, same of `cond ? trueExpr : falseExpr`.
+- [`ConditionalExpr`](https://pkg.go.dev/github.com/ghosind/utils#ConditionalExpr): An alternative to the conditional (ternary) operator (?:), it'll run expression by the conditional result.
 
-- `ConditionalExpr[T any](cond bool, trueExpr, falseExpr func() T) T`
+- [`Max`](https://pkg.go.dev/github.com/ghosind/utils#Max): Gets the maximum value between the two values.
 
-  An alternative to the conditional (ternary) operator (?:), it'll run expression by the conditional result.
+- [`Min`](https://pkg.go.dev/github.com/ghosind/utils#Min): Gets the minimum value between the two values.
 
-- `Max[T constraints.Ordered](a, b T) T`
+### Map Manipulation
 
-  Gets the maximum value of two values.
+- [`CloneMap`](https://pkg.go.dev/github.com/ghosind/utils#CloneMap): Creates a new map, and copies all the keys and their value from the source map.
 
-- `Min[T constraints.Ordered](a, b T) T`
-
-  Gets the minimum value of two values.
+- [`CopyMap`](https://pkg.go.dev/github.com/ghosind/utils#CopyMap): Copies all keys and their value from the source map into the destination map.
 
 ### Type
 
-- `IsSameType(v1, v2 any) bool`
+- [`IsSameType`](https://pkg.go.dev/github.com/ghosind/utils#IsSameType): Compares two values' type.
 
-  Compares two values' type.
+- [`IsSameRawType`](https://pkg.go.dev/github.com/ghosind/utils#IsSameRawType): Compares two values' type without pointer.
 
-- `IsSameRawType(v1, v2 any) bool`
+- [`TypeOf`](https://pkg.go.dev/github.com/ghosind/utils#TypeOf): Gets the type of the value represented in string.
 
-  Compares two values' type without pointer.
+- [`RawTypeOf`](https://pkg.go.dev/github.com/ghosind/utils#RawTypeOf): Gets the type string name without pointer.
 
-- `TypeOf(v any) string`
-
-  Gets the type of the value represented in string.
-
-- `RawTypeOf(v any) string`
-
-  Gets the type string name without pointer.
-
-- `GetElem(o any) any`
-
-  Gets element without pointer.
+- [`GetElem`](https://pkg.go.dev/github.com/ghosind/utils#GetElem): Gets element without pointer.
 
 ### Pointer and Value
 
-- `Pointer[T any](v T) *T`
+- [`Pointer`](https://pkg.go.dev/github.com/ghosind/utils#Pointer): Gets the pointer of a value.
 
-  Gets the pointer of a value.
+- [`Value`](https://pkg.go.dev/github.com/ghosind/utils#Value): Gets the value of a pointer, or the zero value of the type if the pointer is nil.
 
-- `func Value[T any](v *T) T`
+- [`ValueWithDefault`](https://pkg.go.dev/github.com/ghosind/utils#ValueWithDefault): Gets the value of a pointer, or the default value if the pointer is nil.
 
-  Gets the value of a pointer, or the zero value of the type if the pointer is nil.
+- [`PointerSlice`](https://pkg.go.dev/github.com/ghosind/utils#PointerSlice): Converts a slice to a pointer slice.
 
-- `ValueWithDefault[T any](v *T, defaultValue T) T`
+- [`ValueSlice`](https://pkg.go.dev/github.com/ghosind/utils#ValueSlice): Converts a pointer slice to a slice.
 
-  Gets the value of a pointer, or the default value if the pointer is nil.
+- [`PointerMap`](https://pkg.go.dev/github.com/ghosind/utils#PointerMap): Converts a map to a pointer map.
 
-- `PointerSlice[T any](v []T) *[]T`
-
-  Converts a slice to a pointer slice.
-
-- `ValueSlice[T any](v *[]T) []T`
-
-  Converts a pointer slice to a slice.
-
-- `PointerMap[K comparable, V any](v map[K]V) map[K]*V`
-
-  Converts a map to a pointer map.
-
-- `ValueMap[K comparable, V any](v map[K]*V) map[K]V`
-
-  Converts a pointer map to a map.
+- [`ValueMap`](https://pkg.go.dev/github.com/ghosind/utils#ValueMap): Converts a pointer map to a map.
 
 ## License
 
