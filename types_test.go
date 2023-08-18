@@ -59,6 +59,13 @@ func TestTypeOf(t *testing.T) {
 	v2 := &v1
 	ty = TypeOf(v2)
 	a.EqualNow(ty, "*int")
+
+	v3 := testStruct1{}
+	ty = TypeOf(v3)
+	a.EqualNow(ty, "utils.testStruct1")
+
+	ty = TypeOf(&v3)
+	a.EqualNow(ty, "*utils.testStruct1")
 }
 
 func TestRawTypeOf(t *testing.T) {
@@ -79,6 +86,10 @@ func TestRawTypeOf(t *testing.T) {
 
 	ty = RawTypeOf(nil)
 	a.EqualNow(ty, "<nil>")
+
+	v4 := &testStruct1{}
+	ty = RawTypeOf(v4)
+	a.EqualNow(ty, "utils.testStruct1")
 }
 
 func TestGetElem(t *testing.T) {
