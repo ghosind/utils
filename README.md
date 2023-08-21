@@ -90,6 +90,8 @@ bigger := utils.Conditional(a > b, a, b) // a > b ? a : b
 
 ### Type
 
+- [`IsComparableType`](https://pkg.go.dev/github.com/ghosind/utils#IsComparableType): Check the type of value is comparable or not.
+
 - [`IsSameType`](https://pkg.go.dev/github.com/ghosind/utils#IsSameType): Compares two values' type.
 
 - [`IsSameRawType`](https://pkg.go.dev/github.com/ghosind/utils#IsSameRawType): Compares two values' type without pointer.

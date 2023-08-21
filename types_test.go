@@ -15,6 +15,19 @@ type testStruct2[T any] struct {
 	A T
 }
 
+func TestIsComparableType(t *testing.T) {
+	a := assert.New(t)
+
+	a.True(IsComparableType(1))
+	a.True(IsComparableType(1.0))
+	a.True(IsComparableType(int64(1)))
+	a.True(IsComparableType(uint64(1)))
+	a.True(IsComparableType("test"))
+	a.NotTrue(IsComparableType(testStruct1{}))
+	a.NotTrue(IsComparableType(&testStruct1{}))
+	a.NotTrue(IsComparableType(nil))
+}
+
 func TestIsSameType(t *testing.T) {
 	a := assert.New(t)
 

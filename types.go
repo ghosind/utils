@@ -4,6 +4,27 @@ import (
 	"reflect"
 )
 
+// IsComparableType gets the value type and checks whether the type is comparable or not.
+//
+//	IsComparableType(1) // true for int
+//	IsComparableType(1.0) // true for float64
+//	IsComparableType("") // true for string
+//	IsComparableType(nil) // false for nil
+//	IsComparableType(SomeStruct{}) // false for struct
+//	IsComparableType(&SomeStruct{}) // false for pointer
+func IsComparableType(v any) bool {
+	switch v.(type) {
+	case
+		int, int8, int16, int32, int64, // Signed integer
+		uint, uint8, uint16, uint32, uint64, uintptr, // Unsigned integer
+		float32, float64, // Floating-point number
+		string: // string
+		return true
+	default:
+		return false
+	}
+}
+
 // IsSameType compares two values' type.
 //
 //	v1 := 1 // int
