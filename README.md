@@ -80,7 +80,11 @@ bigger := utils.Conditional(a > b, a, b) // a > b ? a : b
 
 - [`Max`](https://pkg.go.dev/github.com/ghosind/utils#Max): Gets the maximum value between the two values.
 
+- [`MaxN`](https://pkg.go.dev/github.com/ghosind/utils#MaxN): Returns the maximum value in the list and returns the zero value of the type if no parameter.
+
 - [`Min`](https://pkg.go.dev/github.com/ghosind/utils#Min): Gets the minimum value between the two values.
+
+- [`MinN`](https://pkg.go.dev/github.com/ghosind/utils#MinN): Returns the minimum value in the list and returns the zero value of the type if no parameter.
 
 ### Map Manipulation
 

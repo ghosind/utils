@@ -53,6 +53,15 @@ func TestMax(t *testing.T) {
 	assertion.Equal(max, b)
 }
 
+func TestMaxN(t *testing.T) {
+	assertion := assert.New(t)
+
+	assertion.Equal(MaxN[int](), 0)
+	assertion.Equal(MaxN(2, 1, 1), 2)
+	assertion.Equal(MaxN(-1, 1, -1), 1)
+	assertion.Equal(MaxN(1, 2, 3, 4, 3, 2, 1), 4)
+}
+
 func TestMin(t *testing.T) {
 	assertion := assert.New(t)
 	a := 1
@@ -60,4 +69,13 @@ func TestMin(t *testing.T) {
 
 	min := Min(a, b)
 	assertion.Equal(min, a)
+}
+
+func TestMinN(t *testing.T) {
+	assertion := assert.New(t)
+
+	assertion.Equal(MinN[int](), 0)
+	assertion.Equal(MinN(2, 1, 2), 1)
+	assertion.Equal(MinN(-1, 1, -1), -1)
+	assertion.Equal(MinN(4, 3, 2, 1, 2, 3, 4), 1)
 }
