@@ -86,6 +86,10 @@ bigger := utils.Conditional(a > b, a, b) // a > b ? a : b
 
 - [`MinN`](https://pkg.go.dev/github.com/ghosind/utils#MinN): Returns the minimum value in the list and returns the zero value of the type if no parameter.
 
+### Math
+
+- [`Matrix`](https://pkg.go.dev/github.com/ghosind/utils#Matrix): Creates and initializes a n*m matrix.
+
 ### Map Manipulation
 
 - [`CloneMap`](https://pkg.go.dev/github.com/ghosind/utils#CloneMap): Creates a new map, and copies all the keys and their value from the source map.
