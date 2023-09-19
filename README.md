@@ -52,11 +52,11 @@ You can also use `Value` or `ValueWithDefault` to get the value of the pointer. 
 
 ```go
 utils.Value(strp) // Hello world
-utils.Value(str, "Default") // Hello world
+utils.ValueWithDefault(str, "Default") // Hello world
 
 strp = nil
 utils.Value(strp) // "" (empty string)
-utils.Value(str, "Default") // Default
+utils.ValueWithDefault(str, "Default") // Default
 ```
 
 ### Conditional Expression
@@ -85,6 +85,10 @@ bigger := utils.Conditional(a > b, a, b) // a > b ? a : b
 - [`Min`](https://pkg.go.dev/github.com/ghosind/utils#Min): Gets the minimum value between the two values.
 
 - [`MinN`](https://pkg.go.dev/github.com/ghosind/utils#MinN): Returns the minimum value in the list and returns the zero value of the type if no parameter.
+
+### Error Handling
+
+- [`TryCatch`](https://pkg.go.dev/github.com/ghosind/utils#TryCatch): An alternative of `try...catch...finally` statement.
 
 ### Math
 
