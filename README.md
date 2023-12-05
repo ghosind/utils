@@ -1,6 +1,7 @@
 # Utilities for Golang
 
 ![Test](https://github.com/ghosind/utils/workflows/utils/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ghosind/utils)](https://goreportcard.com/report/github.com/ghosind/utils)
 [![codecov](https://codecov.io/gh/ghosind/utils/branch/main/graph/badge.svg)](https://codecov.io/gh/ghosind/utils)
 [![Latest version](https://img.shields.io/github/v/release/ghosind/utils?include_prereleases)](https://github.com/ghosind/utils)
 ![License Badge](https://img.shields.io/github/license/ghosind/utils)
@@ -88,6 +89,8 @@ bigger := utils.Conditional(a > b, a, b) // a > b ? a : b
 
 ### Error Handling
 
+- [`Try`](https://pkg.go.dev/github.com/ghosind/utils#Try): Recoverable function container.
+
 - [`TryCatch`](https://pkg.go.dev/github.com/ghosind/utils#TryCatch): An alternative of `try...catch...finally` statement.
 
 ### Math
@@ -117,6 +120,8 @@ bigger := utils.Conditional(a > b, a, b) // a > b ? a : b
 ### Pointer and Value
 
 - [`Pointer`](https://pkg.go.dev/github.com/ghosind/utils#Pointer): Gets the pointer of a value.
+
+- [`PointerWithDefault`](https://pkg.go.dev/github.com/ghosind/utils#PointerWithDefault): Gets the pointer if it is not nil, or the default pointer.
 
 - [`Value`](https://pkg.go.dev/github.com/ghosind/utils#Value): Gets the value of a pointer, or the zero value of the type if the pointer is nil.
 
