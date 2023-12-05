@@ -1,8 +1,37 @@
 package utils
 
 import (
+	"errors"
 	"fmt"
 )
+
+// Try provided a recoverable function container to handle both return error and panic error.
+//
+//	Try(func() error {
+//	  panic("some error")
+//	})
+//	// some error
+func Try(fn func() error) (err error) {
+	defer func() {
+		if e := recover(); e != nil {
+			switch t := e.(type) {
+			case error:
+				err = t
+			case string:
+				err = errors.New(t)
+			default:
+				err = fmt.Errorf("%v", t)
+			}
+		}
+	}()
+
+	if fn == nil {
+		panic(ErrNilFunc)
+	}
+
+	err = fn()
+	return
+}
 
 // TryCatch is an alternative to the `try...catch...finally` statement. This function requires a
 // `try` statement function and a `catch` statement function, and it accepts an optional `finally`
@@ -31,30 +60,15 @@ func TryCatch(
 	catchStmt func(error),
 	finallyStmt ...func(),
 ) error {
-	var tryError error
-	func() {
-		defer func() {
-			if pe := recover(); pe != nil {
-				if e, ok := pe.(error); ok {
-					tryError = e
-				} else {
-					tryError = fmt.Errorf("%v", pe)
-				}
-			}
-		}()
+	err := Try(tryStmt)
 
-		if tryStmt != nil {
-			tryError = tryStmt()
-		}
-	}()
-
-	if tryError != nil && catchStmt != nil {
-		catchStmt(tryError)
+	if err != nil && catchStmt != nil {
+		catchStmt(err)
 	}
 
 	if len(finallyStmt) > 0 && finallyStmt[0] != nil {
 		finallyStmt[0]()
 	}
 
-	return tryError
+	return err
 }

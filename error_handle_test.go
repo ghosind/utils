@@ -7,6 +7,26 @@ import (
 	"github.com/ghosind/go-assert"
 )
 
+func TestTry(t *testing.T) {
+	a := assert.New(t)
+
+	testTry(a, func() error { return nil }, false, "")
+	testTry(a, func() error { return errors.New("expected error") }, true, "expected error")
+	testTry(a, func() error { panic("expected panic") }, true, "expected panic")
+	testTry(a, func() error { panic(errors.New("expected panic error")) }, true, "expected panic error")
+	testTry(a, func() error { panic(1) }, true, "1")
+}
+
+func testTry(a *assert.Assertion, fn func() error, isError bool, errMsg string) {
+	err := Try(fn)
+	if !isError {
+		a.NilNow(err)
+	} else {
+		a.NotNilNow(err)
+		a.EqualNow(err.Error(), errMsg)
+	}
+}
+
 func TestTryCatch(t *testing.T) {
 	a := assert.New(t)
 
@@ -19,7 +39,7 @@ func TestTryCatch(t *testing.T) {
 	testTryCatch(a, func() error { panic(errors.New("test")) }, false, func(err error) {})
 	testTryCatch(a, func() error { panic(errors.New("test")) }, false, func(err error) {}, func() {})
 
-	testTryCatch(a, nil, true, nil)
+	testTryCatch(a, nil, false, nil)
 	testTryCatch(a, func() error { return nil }, true, nil)
 	testTryCatch(a, func() error { return errors.New("test") }, false, nil)
 	testTryCatch(a, func() error { return nil }, true, nil, nil)
