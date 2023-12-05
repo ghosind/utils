@@ -18,6 +18,20 @@ func TestPointer(t *testing.T) {
 	a.EqualNow(*vp, v)
 }
 
+func TestPointerWithDefault(t *testing.T) {
+	a := assert.New(t)
+
+	v := Pointer(1)
+	dv := Pointer(2) // default value pointer
+	a.EqualNow(PointerWithDefault(v, dv), v)
+
+	v = nil
+	a.EqualNow(PointerWithDefault(v, dv), dv)
+
+	dv = nil
+	a.NilNow(PointerWithDefault(v, dv))
+}
+
 func TestValue(t *testing.T) {
 	a := assert.New(t)
 

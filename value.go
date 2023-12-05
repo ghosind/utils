@@ -9,6 +9,21 @@ func Pointer[T any](v T) *T {
 	return &v
 }
 
+// PointerWithDefault returns the pointer if it is not nil, or the default pointer.
+//
+//	v := Pointer(1)
+//	dv := Pointer(2)
+//	PointerWithDefault(v, dv) // &1
+//	v = nil
+//	PointerWithDefault(v, dv) // &2
+func PointerWithDefault[T any](v *T, defaultValue *T) *T {
+	if v != nil {
+		return v
+	}
+
+	return defaultValue
+}
+
 // Value returns the value of a pointer, or the zero value of the type if the pointer is nil.
 //
 //	var p1 *string // nil
